@@ -1,0 +1,151 @@
+#:import Factory kivy.factory.Factory
+
+<ToDoScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: root.background_image_source
+        Color:
+            rgba: 0, 0, 0, 0.5  # Black color with 0.5 opacity
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: 'vertical'
+        MDFlatButton:
+            text: "< Back"
+            theme_text_color: "Custom"
+            text_color: (1, 1, 1, 1)
+            md_bg_color: 0.173, 0.129, 0.365, 0.5
+            size_hint: None, None
+            size: 100, 50
+            font_name: "Tex"
+            pos_hint: {'x': 0, 'y': 1}
+            elevation_normal: 12
+            on_release: 
+                root.manager.current = 'main'
+                root.manager.transition.direction = 'right'
+            canvas.before:
+                Color:
+                    rgba: 0.173, 0.129, 0.365, 0.5
+                BoxShadow:
+                    pos: self.pos
+                    size: self.size
+                    offset: 0, -10
+                    spread_radius: -10, -10
+                    border_radius: 10, 10, 10, 10
+                    blur_radius: 50 if self.state == "normal" else 75               
+        Label:
+            id: date_label
+            text: root.current_date.strftime("%A, %B %d, %Y")  # Display the current date
+            font_size: '18sp'
+            font_name: "TexBold"
+            size_hint: 1, 0.1
+            color: 1, 1, 1, 1
+        MDFloatLayout:
+            size_hint_y: None
+            height: '35dp'  # Adjusted height
+            MDIconButton:
+                icon: "chevron-left"
+                pos_hint: {'x': .12, 'y': 1}
+                theme_text_color: "Custom"
+                text_color: (1, 1, 1, 1)
+                md_bg_color: (0.173, 0.129, 0.365, 0.5)
+                on_release: root.update_date(-1)  # Navigate to the previous date
+            MDIconButton:
+                icon: "chevron-right"
+                pos_hint: {'x': .75, 'y': 1}
+                theme_text_color: "Custom"
+                text_color: (1, 1, 1, 1)
+                md_bg_color: (0.173, 0.129, 0.365, 0.5)
+                on_release: root.update_date(1)  # Navigate to the next date
+        ScrollView:
+            size_hint_y: 0.64
+            GridLayout:
+                id: task_list
+                cols: 1
+                spacing: '5dp'
+                padding: '5dp'  # Adjusted padding
+                size_hint_y: None
+                height: self.minimum_height
+        BoxLayout:
+            size_hint_y: None
+            height: '55dp'  # Adjusted height
+            MDLabel:
+                id: weather_label
+                text: "Fetching weather data..."
+                halign: 'center'
+                valign: 'middle'
+                font_name: "Tex"
+                theme_text_color: "Custom"
+                text_color: (1, 1, 1, 1)
+                markup: True
+            MDFloatingActionButton:
+                icon: "plus"
+                md_bg_color: 0.173, 0.129, 0.365, 0.5
+                elevation_normal: 12
+                pos_hint: {"right": 1, "y": 0}  # Aligns the FAB to the bottom of the BoxLayout
+                on_release: root.manager.current = 'add_todo'
+
+<TaskBoxLayout>:
+    title_label: title_label
+    description_label: description_label
+    orientation: 'vertical'
+    size_hint_y: None
+    height: '90dp'  # Adjusted height
+    switch_state: app.switch_state  # Bind to the SwitchState instance
+    canvas.before:
+        Color:
+            id: bg_color
+            rgba: root.bg_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [5, 5, 5, 5]  # Adjusted radius
+    BoxLayout:
+        size_hint_y: None
+        height: '45dp'  # Adjusted height
+        padding: '10dp'  # Added padding
+        Label:
+            id: title_label
+            text: ''
+            font_name: "TexBold"
+            font_size: '18sp'
+            size_hint_x: 0.8
+            text_size: self.width, None
+            valign: 'middle'
+            halign: 'left'  # Adjusted alignment
+            markup: True
+        CheckBox:
+            id: checkbox
+            size_hint_x: None
+            width: '30dp'
+            pos_hint: {'right': 1, 'center_y': 0.5}
+            active: root.checkbox_state
+            on_active: root.on_checkbox_active(self, self.active)
+        MDIconButton:
+            icon: "pencil"
+            theme_text_color: "Custom"
+            text_color: (1, 1, 1, 1)
+            pos_hint: {'right': 1, 'center_y': 0.5}
+            on_release: app.root.get_screen('todo').edit_task(root.task_id)
+        MDIconButton:
+            icon: "delete"
+            theme_text_color: "Custom"
+            text_color: (1, 1, 1, 1)
+            pos_hint: {'right': 1, 'center_y': 0.5}
+            on_release: app.root.get_screen('todo').delete_task(root.task_id)
+    Label:
+        id: description_label
+        text: ''
+        font_name: "Tex"
+        font_size: '16sp'
+        size_hint_y: None
+        height: '45dp'  # Adjusted height
+        padding: '10dp'  # Added padding
+        text_size: self.width, None
+        valign: 'middle'
+        halign: 'left'  # Adjusted alignment
+        markup: True
+

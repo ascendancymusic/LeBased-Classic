@@ -1,0 +1,160 @@
+<MainScreen>:
+    canvas.before:
+        Rectangle:
+            id: canvas_rectangle
+            pos: self.pos
+            size: self.size
+            source: root.background_image_source  # Bind to background_image_source property
+
+    FloatLayout:
+        MDSwitch:
+            id: main_menu_switch
+            pos_hint: {"left": 1, "top": 1}
+            size_hint: None, None
+            thumb_color_active: (0.173, 0.129, 0.365)
+            track_color_active: (0.145, 0.325, 0.529)
+            size: dp(48), dp(48)
+            active: root.switch_active  # Bind to switch_active property
+            on_active: root.on_switch_active(*args)  # Trigger on_switch_active method in Python
+
+    GridLayout:
+        cols: 1
+        padding: [0, 50]
+        spacing: 10
+
+        # Title
+        Image:
+            id: title_image
+            source: root.title_image
+            size_hint_y: None
+            height: self.texture_size[1] if self.texture else 0
+            width: self.texture_size[1] if self.texture else 0
+
+        # Quote Label
+        RelativeLayout:
+            Label:
+                id: quote_label_shadow
+                text: ""
+                halign: "center"
+                markup: True
+                font_size: 20
+                color: (0, 0, 0, 0.5)
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                text_size: self.width, None  # Enable text wrapping
+                size_hint_y: None
+                height: self.texture_size[1] if self.texture else 0  # Adjust height based on text size
+
+            Label:
+                id: quote_label
+                text: ""
+                halign: "center"
+                markup: True
+                font_size: 20
+                color: (1, 1, 1, 1)
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                text_size: self.width, None  # Enable text wrapping
+                size_hint_y: None
+                height: self.texture_size[1] if self.texture else 0  # Adjust height based on text size
+
+        # Buttons layout
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            padding: [0, 0] 
+            height: self.minimum_height  # Adjusted height to fit content
+
+            MDFlatButton:
+                text: "To-Do"
+                size_hint: 1, 0.25
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                font_name: "TexBold"
+                md_bg_color: 0.173, 0.129, 0.365, 0.5
+                on_release: app.switch_to_todo(self)
+                canvas.before:
+                    Color:
+                        rgba: 0.173, 0.129, 0.365, 0.5
+                    BoxShadow:
+                        pos: self.pos
+                        size: self.size
+                        offset: 0, -10
+                        spread_radius: -10, -10
+                        border_radius: 10, 10, 10, 10
+                        blur_radius: 50 if self.state == "normal" else 20
+
+            MDFlatButton:
+                text: "Planner"
+                size_hint: 1, 0.25
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                font_name: "TexBold"
+                md_bg_color: 0.173, 0.129, 0.365, 0.5
+                on_release: app.switch_to_planner(self)
+                canvas.before:
+                    Color:
+                        rgba: 0.173, 0.129, 0.365, 0.5
+                    BoxShadow:
+                        pos: self.pos
+                        size: self.size
+                        offset: 0, -10
+                        spread_radius: -10, -10
+                        border_radius: 10, 10, 10, 10
+                        blur_radius: 50 if self.state == "normal" else 20
+
+            MDFlatButton:
+                text: "Sleepar"
+                size_hint: 1, 0.25
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                font_name: "TexBold"
+                md_bg_color: 0.173, 0.129, 0.365, 0.5
+                on_release: app.switch_to_sleepar(self)
+                canvas.before:
+                    Color:
+                        rgba: 0.173, 0.129, 0.365, 0.5
+                    BoxShadow:
+                        pos: self.pos
+                        size: self.size
+                        offset: 0, -10
+                        spread_radius: -10, -10
+                        border_radius: 10, 10, 10, 10
+                        blur_radius: 50 if self.state == "normal" else 20
+
+            MDFlatButton:
+                text: "Stats"
+                size_hint: 1, 0.25
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                font_name: "TexBold"
+                md_bg_color: 0.173, 0.129, 0.365, 0.5
+                on_release: app.switch_to_stats(self)
+                canvas.before:
+                    Color:
+                        rgba: 0.173, 0.129, 0.365, 0.5
+                    BoxShadow:
+                        pos: self.pos
+                        size: self.size
+                        offset: 0, -10
+                        spread_radius: -10, -10
+                        border_radius: 10, 10, 10, 10
+                        blur_radius: 50 if self.state == "normal" else 20
+
+            MDFlatButton:
+                text: "About"
+                size_hint: 1, 0.25
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                font_name: "TexBold"
+                md_bg_color: 0.173, 0.129, 0.365, 0.5
+                on_release: app.switch_to_about(self)
+                canvas.before:
+                    Color:
+                        rgba: 0.173, 0.129, 0.365, 0.5
+                    BoxShadow:
+                        pos: self.pos
+                        size: self.size
+                        offset: 0, -10
+                        spread_radius: -10, -10
+                        border_radius: 10, 10, 10, 10
+                        blur_radius: 50 if self.state == "normal" else 20
+    
