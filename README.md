@@ -1,5 +1,5 @@
 # LeBased Classic
-Old version of LeBased - A python powered productivity tool
+A python powered productivity and idea tool
 
 [![Watch the video](https://img.youtube.com/vi/8uGC1kIWIlc/maxresdefault.jpg)](https://youtu.be/8uGC1kIWIlc)
 
