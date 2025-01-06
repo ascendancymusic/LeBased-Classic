@@ -1,0 +1,33 @@
+Welcome to Le Based!
+
+Open 'LeBased', you can drag this to the desktop (you don't ever need to open any folders)
+
+
+--Common--
+-"F11" to enter/exit fullscreen. The fullscreen goes full to however large you have resized the application window: I recommend using
+fullscreen on fully maximized window.
+-"ESC" to exit in Main Menu, in other Menus, "ESC" brings you back.
+-The Switch in top left in Main Menu changes the theme.
+
+
+
+--Menus--
+-In ToDo Menu you can, swipe, use left and right arrow keys, or use the buttons to navigate.
+-ToDo Menu might lag depending on your internet speed when you open a date for a first time, this is because it fetches the weather.
+
+-Planner Menu is fully draggable and zoomable on mousewheel, you'll figure it out. It starts out with the initial
+"Top" box (which you can rename btw) being high up, just drag the screen...
+-You add nodes/ideas/boxes by dragging the '+' icon and releasing. If you just press the icon the node will leave at its place.
+-Press 'CTRL' while dragging a box to drag all of its sub boxes.
+
+-Sleepar Menu is self explanatory.
+
+-Stats Menu shows data from Sleepar Menu. You can delete the data with the garbage bin icon.
+
+-About Menu is self explanatory.
+
+
+
+Enjoy!!!
+
+-AscenDancy inc.

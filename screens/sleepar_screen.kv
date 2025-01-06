@@ -1,0 +1,144 @@
+<SleeparScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: root.background_image_source
+    FloatLayout:
+        MDFlatButton:
+            text: "< Back"
+            theme_text_color: "Custom"
+            text_color: (1, 1, 1, 1)
+            md_bg_color: 0.173, 0.129, 0.365, 0.5
+            size_hint: None, None
+            size: 100, 50
+            font_name: "Tex"
+            pos_hint: {'x': 0, 'top': 1}  # Adjusted to be at the top
+            on_release: root.manager.current = 'main'
+            elevation: 100  # Adjust the shadow elevation here
+            canvas.before:
+                Color:
+                    rgba: 0.173, 0.129, 0.365, 0.5
+                BoxShadow:
+                    pos: self.pos
+                    size: self.size
+                    offset: 0, -10
+                    spread_radius: -10, -10
+                    border_radius: 10, 10, 10, 10
+                    blur_radius: 50 if self.state == "normal" else 75            
+        Label:
+            text: "Sleepar"
+            font_size: '24sp'
+            font_name: "TexBold"
+            bold: True
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {'center_x': 0.5, 'y': 0.88}
+            color: 1, 1, 1, 1
+        Label:
+            id: current_time_label
+            font_size: '20sp'
+            font_name: "Tex"
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {'center_x': 0.5, 'y': 0.82}  # Move up the time label
+            color: 1, 1, 1, 1
+            halign: 'center'
+        BoxLayout:
+            size_hint: 1, 0.1
+            pos_hint: {'center_x': 0.5, 'y': 0.7}
+            padding: [20, 0]
+            MDRoundFlatButton:
+                id: sleep_button
+                text: "Sleep Button"
+                font_name: "Tex"
+                pos_hint: {'center_x': 0.25}
+                size_hint: 0.4, 0.5
+                width: dp(150)
+                height: dp(50)
+                elevation_normal: 8
+                md_bg_color: 0.173, 0.129, 0.365, 0.5
+                text_color: (1, 1, 1, 1)
+                line_color: (1, 1, 1, 1)
+                on_release:
+                    root.show_cleanar_options()
+            MDRoundFlatButton:
+                id: get_up_button
+                text: "Get Up"
+                font_name: "Tex"
+                pos_hint: {'center_x': 0.75}
+                size_hint: 0.4, 0.5
+                width: dp(150)
+                height: dp(50)
+                elevation_normal: 8
+                md_bg_color: 0.173, 0.129, 0.365, 0.5
+                text_color: (1, 1, 1, 1)
+                line_color: (1, 1, 1, 1)
+                on_release: root.get_up_pressed()
+        MDTextField:
+            id: dream_input
+            hint_text: "Write about your dream(s)"
+            helper_text: "Or leave empty if no dreams"
+            helper_text_color_focus: 1, 0.984, 0, 0.5
+            font_name: "Tex"
+            font_name_helper_text: "Tex"
+            font_name_hint_text: "Tex"
+            font_name_max_length: "Tex"
+            mode: "fill"
+            helper_text_mode: "on_focus"
+            line_color_focus: 1, 1, 1, 1
+            text_color_focus: 0.173, 0.129, 0.365, 0.5
+            size_hint: 0.9, 0.1
+            pos_hint: {'center_x': 0.5, 'y': 0.55}
+            opacity: 1 if root.text_input_visible else 0
+            disabled: not root.text_input_visible
+            foreground_color: 1, 1, 1, 1
+        MDRoundFlatButton:
+            text: "Done"
+            size_hint: None, None
+            text_color: (1, 1, 1, 1)
+            line_color: (1, 1, 1, 1)
+            size: dp(100), dp(40)
+            font_name: "Tex"
+            pos_hint: {'center_x': 0.5, 'y': 0.45}
+            opacity: 1 if root.done_button_visible else 0
+            disabled: not root.done_button_visible
+            on_release:
+                root.text_input_visible = False
+                root.done_button_visible = False
+                root.done_button_pressed()
+        Label:
+            id: cleanar_label
+            text: "Cleanar?"
+            font_size: '16sp'
+            font_name: "Tex"
+            bold: True
+            size_hint: 1, 0.1
+            opacity: 0
+            color: 1, 1, 1, 1
+            pos_hint: {'center_x': 0.5, 'y': 0.1}  # Adjusted position
+        BoxLayout:
+            id: cleanar_options
+            orientation: 'horizontal'
+            size_hint: 1, 0.1
+            pos_hint: {'center_x': 0.5, 'y': 0}  # Adjusted position
+            opacity: 0
+            disabled: not root.cleanar_options_visible
+            Button:
+                text: "Ofc"
+                size_hint_x: 0.2
+                size_hint_y: None
+                font_name: "Tex"
+                height: dp(40)
+                border_radius: [15]
+                background_color: 1, 0.984, 0, 0.5
+                on_release: root.on_cleanar_button_press("ofc")
+            Button:
+                text: "No, coomed for Satan"
+                size_hint_x: 0.2
+                size_hint_y: None
+                font_name: "Tex"
+                height: dp(40)
+                border_radius: [15]
+                background_color: 1, 0.984, 0, 0.5
+                on_release: root.on_cleanar_button_press("no")

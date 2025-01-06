@@ -1,0 +1,99 @@
+<AddToDoScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: root.background_image_source
+    BoxLayout:
+        orientation: 'vertical'
+        MDFlatButton:
+            text: "< Back"
+            theme_text_color: "Custom"
+            text_color: (1, 1, 1, 1)
+            md_bg_color: 0.173, 0.129, 0.365, 0.5
+            size_hint: None, None
+            size: 100, 50
+            font_name: "Tex"
+            pos_hint: {'x': 0, 'y': 1}
+            on_release:
+                root.manager.current = 'todo'
+                root.manager.transition.direction = 'right'
+            elevation: 100  # Adjust the shadow elevation here
+            canvas.before:
+                Color:
+                    rgba: 0.173, 0.129, 0.365, 0.5
+                BoxShadow:
+                    pos: self.pos
+                    size: self.size
+                    offset: 0, -10
+                    spread_radius: -10, -10
+                    border_radius: 10, 10, 10, 10
+                    blur_radius: 50 if self.state == "normal" else 75
+    MDFloatLayout:
+        orientation: 'vertical'
+        Label:
+            text: "Add a task"
+            font_size: '24sp'
+            font_name: "TexBold"
+            bold: True
+            size_hint: 1, 0.1
+            color: 1, 1, 1, 1
+            pos_hint: {"center_x": .5, "center_y": .9}
+    MDFloatLayout:
+        size_hint: .45, .07
+        pos_hint: {"center_x": .5, "center_y": .78}
+        canvas:
+            Color:
+                rgb: 0.173, 0.129, 0.365, 0.5
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [25]
+        TextInput:
+            id: title
+            hint_text: "Title"
+            size_hint: 1, None
+            pos_hint: {"center_x": .5, "center_y": .6}
+            height: self.minimum_height
+            font_name: "Tex"
+            font_size: 34
+            multiline: False
+            cursor_color: (1, 1, 1, 1)
+            cursor_width: 2
+            foreground_color: 1, 1, 1, 1
+            background_color: 0, 0, 0, 0
+            padding: 15
+    MDFloatLayout:
+        size_hint: .45, .12
+        pos_hint: {"center_x": .5, "center_y": .66}
+        canvas:
+            Color:
+                rgb: 0.173, 0.129, 0.365, 0.5
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [25]
+        TextInput:
+            id: description
+            hint_text: "Description"
+            size_hint: 1, None
+            pos_hint: {"center_x": .5, "center_y": .5}
+            height: self.minimum_height
+            font_name: "Tex"
+            font_size: 26
+            multiline: False
+            cursor_color: (1, 1, 1, 1)
+            cursor_width: 2
+            foreground_color: 1, 1, 1, 1
+            background_color: 0, 0, 0, 0
+            padding: 15
+    MDRoundFlatButton:
+        text: "ADD TASK"
+        size_hint: .35, .08
+        pos_hint: {"center_x": .5, "center_y": .42}
+        font_name: "Tex"
+        font_size: '26'
+        text_color: (1, 1, 1, 1)
+        md_bg_color: 0.145, 0.325, 0.529, 0.5
+        line_color: (1, 1, 1, 1)
+        on_release: root.validate_and_add_task()

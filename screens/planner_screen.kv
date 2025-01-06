@@ -1,0 +1,151 @@
+#:import MDIconButton kivymd.uix.button.MDIconButton
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDCheckbox kivymd.uix.selectioncontrol.MDCheckbox
+#:import MDSwitch kivymd.uix.selectioncontrol.MDSwitch
+#:import dp kivy.metrics.dp
+
+<PlannerScreen>:
+    FloatLayout:
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: root.background_image_source
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, 1
+            ScatterPlane:
+                id: scatter
+                do_rotation: False
+                do_translation_y: True
+                do_scale: True
+                TreeLayout:
+                    id: tree_layout
+                    size_hint: None, None
+                    size: self.parent.size
+        MDFlatButton:
+            text: "< Back"
+            theme_text_color: "Custom"
+            text_color: (1, 1, 1, 1)
+            md_bg_color: 0.173, 0.129, 0.365, 0.5
+            size_hint: None, None
+            size: dp(100), dp(50)
+            font_name: "Tex"
+            pos_hint: {'x': 0, 'top': 1}
+            on_release: root.manager.current = 'main'
+            elevation: 100
+            canvas.before:
+                Color:
+                    rgba: 0.173, 0.129, 0.365, 0.5
+                BoxShadow:
+                    pos: self.pos
+                    size: self.size
+                    offset: 0, -10
+                    spread_radius: -10, -10
+                    border_radius: 10, 10, 10, 10
+                    blur_radius: 50 if self.state == "normal" else 75
+
+<TreeNode>:
+    orientation: 'vertical'
+    size_hint: None, None
+    size: dp(175), dp(150)
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: None, None
+        size: dp(175), dp(100)
+
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 0.2
+            RoundedRectangle:
+                size: self.size
+                pos: self.x - dp(4), self.y - dp(4)
+                radius: [dp(25),]
+
+            Color:
+                rgba: (1, 0.984, 0, 0.5) if root.checkbox_active else (0.173, 0.129, 0.365, 0.5)
+            RoundedRectangle:
+                size: self.size
+                pos: self.pos
+                radius: [dp(25),]
+
+            Color:
+                rgba: 1, 1, 1, 1
+            Line:
+                rounded_rectangle: (self.x, self.y, self.width, self.height, dp(25))
+                width: 1
+        MDTextField:
+            id: text_input
+            hint_text: " Enter text"
+            size_hint: None, None
+            size: dp(175), dp(20)
+            font_name: "TexBold"
+            font_name_helper_text: "Tex"
+            font_name_hint_text: "Tex"
+            font_name_max_length: "Tex"
+            hint_text_mode: "on_focus"
+            line_color_focus: 1, 1, 1, 1
+            line_color_normal: 1, 0.984, 0, 1
+            color_mode: 'custom'
+            current_hint_text_color: 1, 1, 1, 1
+            hint_text_color_normal: 1, 1, 1, 1
+            normal_color: 0.173, 0.129, 0.365, 0.5
+            text_color_normal: 1, 1, 1, 1
+            text_color_focus: 1, 1, 1, 1
+            multiline: False
+            pos_hint: {'center_x': 0.5}
+            halign: 'center'
+            on_text: root.update_hint_text(self)
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            size: dp(175), dp(30)
+            elevation: 100
+            pos_hint: {'center_x': 0.5} if not root.is_root else {'center_x': 0.675}
+            MDCheckbox:
+                id: checkbox
+                size_hint: None, None
+                size: dp(34), dp(34)
+                color_inactive: 1, 1, 1, 1
+                color_active: 1, 0.984, 0, 0.75
+                pos_hint: {'center_y': 0.78}
+                disabled: root.is_root
+                opacity: 0 if root.is_root else 1
+                active: root.checkbox_active
+                on_active: root.on_checkbox_active(self, self.active)
+            MDIconButton:
+                id: add_button
+                icon: "plus"
+                theme_text_color: "Custom"
+                text_color: (1, 1, 1, 1)
+                size_hint: None, None
+                size: dp(24), dp(24)
+                on_press: root.start_drawing_line(self)
+            MDIconButton:
+                id: delete_button
+                icon: "delete"
+                theme_text_color: "Custom"
+                text_color: (1, 1, 1, 1)
+                opacity: 0 if root.is_root else 1
+                disabled: root.is_root
+                size_hint: None, None
+                size: dp(24), dp(24)
+                on_release: root.delete_node()
+            MDIconButton:
+                id: drag_button
+                icon: "drag-vertical"
+                theme_text_color: "Custom"
+                text_color: (1, 1, 1, 1)
+                size_hint: None, None
+                size: dp(24), dp(24)
+                disabled: root.is_root
+                opacity: 0 if root.is_root else 1
+                on_press: root.start_dragging(self)
+    BoxLayout:
+        id: children_layout
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: dp(100)
+        size_hint_x: None
+        width: self.minimum_width

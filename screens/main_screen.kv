@@ -1,0 +1,33 @@
+# main_screen.kv
+<MainScreen>:
+    canvas.before:
+        Rectangle:
+            id: canvas_rectangle
+            pos: self.pos
+            size: self.size
+            source: root.background_image_source  # Bind to background_image_source property
+
+    FloatLayout:
+        MDSwitch:
+            id: main_menu_switch
+            pos_hint: {"left": 1, "top": 1}
+            size_hint: None, None
+            thumb_color_active: (0.173, 0.129, 0.365)
+            track_color_active: (0.145, 0.325, 0.529)
+            size: dp(48), dp(48)
+            active: root.switch_active  # Bind to switch_active property
+            on_active: root.on_switch_active(*args)  # Trigger on_switch_active method in Python
+        MDFlatButton:
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            size_hint: None, None
+            size: 200, 150
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 1, 0.85
+                BoxShadow:
+                    pos: self.pos
+                    size: self.size
+                    offset: 0, -10
+                    spread_radius: -20, -20
+                    border_radius: 10, 10, 10, 10
+                    blur_radius: 80 if self.state == "normal" else 50
